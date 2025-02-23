@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+{%block title%}All Blog posts{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<a class ='nav-link' href="{% url 'post_create' %}">Create Post</a>
+<ul class = 'list-group'>
+    {%for post in posts %}
+    <li class="list-group-item">
+        <h2><a href="{% url 'post_details' post.id %}">{{ post.post_title }}</a></h2>
+        <small>By {{ post.owner }} on {{ post.created_date}}</small>
+        <p>{{ post.post_content| truncatewords:30}}</p>
+    </li>
+    {% empty%}
+    <li> No posts found.</li>
+    {% endfor %}
+        
+</ul>
+
+
+{% endblock %}
